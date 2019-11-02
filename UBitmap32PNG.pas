@@ -3,7 +3,7 @@ unit UBitmap32PNG;
 interface
 
 uses
-   Windows, Classes, Graphics, SysUtils ,GR32;
+   Windows, SysUtils, Classes, GR32;
 
 procedure  ExportPng(ABmp:TBitmap32;Stream: TStream);
 
@@ -65,8 +65,9 @@ begin
 end;
 
 function Swap32(Value: integer): integer;
-asm
-  BSWAP EAX
+begin
+  LongRec(Result).Hi := System.Swap(LongRec(Value).Lo);
+  LongRec(Result).Lo := System.Swap(LongRec(Value).Hi);
 end;
 
 procedure ExportPng(ABmp:TBitmap32;Stream: TStream);
